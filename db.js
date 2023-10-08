@@ -1,5 +1,5 @@
+import postgres from "postgres"
 import 'dotenv/config'
-import postgres from 'postgres'
 
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
 
@@ -13,4 +13,4 @@ export const sql = postgres({
   connection: {
     options: `project=${ENDPOINT_ID}`,
   },
-});
+})

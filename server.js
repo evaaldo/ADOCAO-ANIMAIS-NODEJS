@@ -1,61 +1,54 @@
-// fastify é um mini framework para ajudar com questões básicas de backend, como roteamento
-import { fastify } from 'fastify'
-// import { DatabaseMemory } from './database-memory.js'
-import { DatabasePostgres } from './database-postgres.js'
+import express from 'express'
+import { Database } from './database.js'
 
-const server = fastify()
+const server = express()
+const database = new Database()
+server.use(express.json())
 
-//GET: busca alguma informação
-//POST: criar um registro
-//PUT: alteração de algum registro
-//DELETE: deleta algum registro
-
-// const database = new DatabaseMemory()
-const database = new DatabasePostgres()
-
-// aqui é declarada uma rota, a rota raiz
-server.post('/videos', async (request, response) => {
-    const {title, description, duration} = request.body
+// CREATE
+server.post('/animais', async (req,res) => {
+    const { id,nome,idade } = req.body
 
     await database.create({
-        title: title,
-        description: description,
-        duration: duration,
+        id,
+        nome,
+        idade
     })
 
-    return response.status(201).send()
+    return res.send()
 })
 
-server.get('/videos', async (request, response) => {
-    const search = request.query.search
+// READ
+server.get('/animais', async (req,res) => {
+    const animais = await database.read()
 
-    const videos = await database.read(search)
-
-    return videos
+    return res.json(animais)
 })
 
-server.put('/videos/:id', async (request, response) => {
-    const videoId = request.params.id
-    const { title, description, duration } = request.body
+// UPDATE
+server.put('/animais/:id', async (req,res) => {
+    const idUpdate = req.params.id
+    const { id,nome,idade } = req.body
 
-    await database.update(videoId, {
-        title: title,
-        description: description,
-        duration: duration
+    await database.update(idUpdate,{
+        id,
+        nome,
+        idade
     })
 
-    return response.status(204).send()
+    return res.send()
 })
 
-server.delete('/videos/:id', async (request, response) => {
-    const videoId = request.params.id
+// DELETE
+server.delete('/animais/:id', async (req,res) => {
+    const idDelete = req.params.id
+    
+    await database.delete(idDelete)
 
-    await database.delete(videoId)
-
-    return response.status(204).send()
+    return res.send()
 })
 
-// aqui é aberto o server na porta 3000
-server.listen({
-    port: 3000,
+// Inicializa server
+server.listen(3000, () => {
+    console.log("Server aberto")
 })
