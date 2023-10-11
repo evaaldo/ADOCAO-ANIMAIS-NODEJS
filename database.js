@@ -14,15 +14,15 @@ export class Database {
         return animais
     }
 
-    async update(idUp,animal) {
-        const idUpdate = idUp
+    async update(idUpdate,animal) {
+        const idUp = idUpdate
         const { id,nome,idade } = animal
 
-        await sql`UPDATE animais SET id = ${id}, nome = ${nome}, idade = ${idade} WHERE id = ${idUpdate}`
+        await sql`UPDATE animais SET id = ${id}, nome = ${nome}, idade = ${idade} WHERE id = ${idUp}`
     }
 
-    async delete(id) {
-        await sql`DELETE FROM animais WHERE id = ${id}`
+    async delete(idDelete) {
+        await sql`DELETE FROM animais WHERE id = ${idDelete}`
     }
 
 }

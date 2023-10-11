@@ -27,8 +27,8 @@ server.get('/animais', async (req,res) => {
 
 // UPDATE
 server.put('/animais/:id', async (req,res) => {
-    const idUpdate = req.params.id
     const { id,nome,idade } = req.body
+    const idUpdate = req.params.id
 
     await database.update(idUpdate,{
         id,
@@ -42,13 +42,13 @@ server.put('/animais/:id', async (req,res) => {
 // DELETE
 server.delete('/animais/:id', async (req,res) => {
     const idDelete = req.params.id
-    
+
     await database.delete(idDelete)
 
     return res.send()
 })
 
-// Inicializa server
+// Inicia o server
 server.listen(3000, () => {
-    console.log("Server aberto")
+    console.log('Servidor iniciado')
 })
