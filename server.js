@@ -49,6 +49,6 @@ server.delete('/animais/:id', async (req,res) => {
 })
 
 // Inicia o server
-server.listen(3000, () => {
-    console.log('Servidor iniciado')
+server.listen({
+    port: process.env.port ?? 3000
 })
