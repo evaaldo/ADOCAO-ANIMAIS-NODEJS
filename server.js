@@ -50,5 +50,6 @@ server.delete('/animais/:id', async (req,res) => {
 
 // Inicia o server
 server.listen({
+    host: '0.0.0.0',
     port: process.env.port ?? 3000
 })
